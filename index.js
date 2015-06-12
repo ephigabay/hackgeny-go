@@ -1,7 +1,8 @@
 var express = require('express');
 var locationProvider = require('./lib/location-provider');
 var directionProvider = require('./lib/direction-provider');
-var Point = require('./classes/Point');
+var Point = require('./classes/point');
+var Story = require('./classes/story');
 var config = require('./config/index');
 var app = express();
 
@@ -22,8 +23,8 @@ app.get('/api/story', function(request, response) {
             console.log("Best route is: " + bestRoute.distance + " meters");
             return directionProvider.getRouteDirections(currentLocation, bestRoute.permutation)
         })
-        .then(function(routeDirections) {
-            response.send(routeDirections);
+        .then(function(polyline) {
+            response.send(new Story(markers, polyline));
         });
 });
 
