@@ -34,7 +34,7 @@ Point.findShortestRoute = function(pointsArray, currentLocation, optimalDistance
     var permutations = arrayStuff.permute(pointsArray);
     console.log("finished calculating permutations");
     return permutations.reduce(function(p, c) {
-        var distance = Point.getRouteDistance(c);
+        var distance = Point.getRouteDistance(c, currentLocation);
         if(!p || Math.abs(distance - optimalDistance) < Math.abs(p.distance - optimalDistance)) {
             p = {
                 permutation: c,
@@ -57,8 +57,8 @@ Point.getRouteDistance = function(route, currentLocation) {
 
 Point.optimizeRoute = function(permutation, currentLocation, optimalDistance) {
     while(permutation.distance > optimalDistance) {
-        permutation.pop();
-        permutation.distance = Point.getRouteDistance(permutation.permutation);
+        permutation.permutation.pop();
+        permutation.distance = Point.getRouteDistance(permutation.permutation, currentLocation);
     }
     return permutation;
 };
