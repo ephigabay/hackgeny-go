@@ -16,10 +16,15 @@
     "type": "git",
     "url": "https://github.com/heroku/node-js-getting-started"
   },
-  "keywords": [
-    "node",
-    "heroku",
-    "express"
-  ],
-  "license": "MIT"
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ephigabay/hackgeny-go/issues"
+  },
+  "homepage": "https://github.com/ephigabay/hackgeny-go",
+  "dependencies": {
+    "express": "^4.12.4",
+    "bluebird": "~2.9.27",
+    "request": "~2.57.0"
+  }
 }
