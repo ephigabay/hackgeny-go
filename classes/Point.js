@@ -5,6 +5,9 @@
 var arrayStuff = require('../lib/array-stuff');
 
 function Point(point) {
+
+   point = point || {};
+
     this.geometry = point.geometry;
     this.icon = point.icon;
     this.id = point.id;
@@ -22,16 +25,17 @@ Point.prototype.getDistanceFrom = function(point) {
         point.geometry.location.lat, point.geometry.location.lng);
 };
 
-Point.findBestRoute = function(pointsArray, optimalDistance) {
+Point.findBestRoute = function(pointsArray, currentLocation, optimalDistance) {
     console.log("calculating permutations");
     var permutations = arrayStuff.permute(pointsArray);
     console.log("finished calculating permutations");
     return permutations.reduce(function(p, c) {
         var distance = 0;
+        distance += currentLocation.getDistanceFrom(c[0]);
         for(var i = 0; i < c.length - 1; i++) {
             distance += c[i].getDistanceFrom(c[i+1]);
         }
-        distance += c[i].getDistanceFrom(c[0]);
+        distance += c[i].getDistanceFrom(currentLocation);
         if(!p || Math.abs(distance - optimalDistance) < Math.abs(p.distance - optimalDistance)) {
             p = {
                 permutation: c,
