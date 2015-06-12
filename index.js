@@ -1,7 +1,10 @@
+/*global require*/
+
 var express = require('express');
 var locationProvider = require('./lib/location-provider');
 var directionProvider = require('./lib/direction-provider');
 var Point = require('./classes/point');
+var Route = require('./classes/route');
 var Story = require('./classes/story');
 var config = require('./config/index');
 var app = express();
@@ -11,23 +14,26 @@ app.use(express.static(__dirname + '/public'));
 
 app.get('/api/story', function(request, response) {
     var currentLocation = new Point({geometry: {location: {lat: 32.264506, lng: 34.876531}}});
-    var distance = 3500;
-    locationProvider.getNearByMarkers(currentLocation, distance)
-        .then(function(items) {
-            if(items.length > config.maxPoints) {
-                items = items.slice(0, config.maxPoints);
+    var optimalDistance = 3500;
+    var route;
+    locationProvider.getNearByMarkers(currentLocation, optimalDistance)
+        .then(function(markers) {
+            if(markers.length > config.maxPoints) {
+                markers = markers.slice(0, config.maxPoints);
             }
-            return Point.findShortestRoute(items, currentLocation, distance);
+            return Route.findShortestRoute(markers, currentLocation, optimalDistance);
         })
         .then(function(route) {
-            return Point.optimizeRoute(route, currentLocation, distance);
+            return route.optimizeRoute(currentLocation, optimalDistance);
         })
         .then(function(bestRoute) {
             console.log("Best route is: " + bestRoute.distance + " meters");
-            return directionProvider.getRouteDirections(currentLocation, bestRoute.permutation)
+            route = bestRoute;
+
+            return directionProvider.getRouteDirections(currentLocation, bestRoute.route);
         })
         .then(function(polyline) {
-            response.send(new Story(markers, polyline));
+            response.send(new Story(route.route, polyline));
         });
 });
 

@@ -9,3 +9,5 @@ function Story(markers, polyline) {
     this.introduction = 'Elad ya gever AL!!';
     // TODO: Build introduction.
 }
+
+module.exports = Story;

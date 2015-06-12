@@ -1,8 +1,7 @@
 /**
  * Created by ephi on 12/06/15.
  */
-/*global require*/
-var arrayStuff = require('../lib/array-stuff');
+/*global require,module*/
 
 function Point(point) {
 
@@ -10,13 +9,13 @@ function Point(point) {
 
     this.geometry = point.geometry;
     this.icon = point.icon;
-    this.id = point.id;
     this.name = point.name;
-    this.place_id = point.place_id;
-    this.reference = point.reference;
-    this.scope = point.scope;
     this.types = point.types;
     this.vicinity = point.vicinity;
+    //this.place_id = point.place_id;
+    //this.reference = point.reference;
+    //this.id = point.id;
+    //this.scope = point.scope;
 }
 
 Point.prototype.getDistanceFrom = function (point) {
@@ -29,39 +28,7 @@ Point.prototype.getCoordinates = function () {
     return this.geometry.location.lat + ',' + this.geometry.location.lng;
 };
 
-Point.findShortestRoute = function (pointsArray, currentLocation, optimalDistance) {
-    console.log("calculating permutations");
-    var permutations = arrayStuff.permute(pointsArray);
-    console.log("finished calculating permutations");
-    return permutations.reduce(function (p, c) {
-        var distance = Point.getRouteDistance(c);
-        if (!p || Math.abs(distance - optimalDistance) < Math.abs(p.distance - optimalDistance)) {
-            p = {
-                permutation: c,
-                distance: distance
-            }
-        }
-        return p;
-    }, null);
-};
-
-Point.getRouteDistance = function (route, currentLocation) {
-    var distance = 0;
-    distance += currentLocation.getDistanceFrom(route[0]);
-    for (var i = 0; i < route.length - 1; i++) {
-        distance += route[i].getDistanceFrom(route[i + 1]);
-    }
-    distance += route[i].getDistanceFrom(currentLocation);
-    return distance;
-};
-
-Point.optimizeRoute = function (permutation, currentLocation, optimalDistance) {
-    while (permutation.distance > optimalDistance) {
-        permutation.pop();
-        permutation.distance = Point.getRouteDistance(permutation.permutation);
-    }
-    return permutation;
-};
+/* Stuff from the interwebs */
 
 function calcCrow(lat1, lon1, lat2, lon2) {
     var R = 6371; // km
