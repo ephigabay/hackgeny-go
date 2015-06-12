@@ -1,5 +1,6 @@
 var express = require('express');
 var locationProvider = require('./lib/location-provider');
+var directionProvider = require('./lib/direction-provider');
 var Point = require('./classes/Point');
 var config = require('./config/index');
 var app = express();
@@ -10,14 +11,19 @@ app.use(express.static(__dirname + '/public'));
 app.get('/api/story', function(request, response) {
     var currentLocation = new Point({geometry: {location: {lat: 32.264506, lng: 34.876531}}});
     var distance = 3500;
-    locationProvider(currentLocation, distance)
+    locationProvider.getNearByMarkers(currentLocation, distance)
         .then(function(items) {
             if(items.length > config.maxPoints) {
                 items = items.slice(0, config.maxPoints);
             }
-            console.log("got " + items.length.toString() + " items");
-            var bestRoute = Point.findBestRoute(items, currentLocation, distance);
-            response.send("Best route is: " + bestRoute.distance + " meters");
+            return Point.findBestRoute(items, currentLocation, distance);
+        })
+        .then(function(bestRoute) {
+            console.log("Best route is: " + bestRoute.distance + " meters");
+            return directionProvider.getRouteDirections(currentLocation, bestRoute.permutation)
+        })
+        .then(function(routeDirections) {
+            response.send(routeDirections);
         });
 });
 

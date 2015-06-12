@@ -25,6 +25,10 @@ Point.prototype.getDistanceFrom = function(point) {
         point.geometry.location.lat, point.geometry.location.lng);
 };
 
+Point.prototype.getCoordinates = function() {
+    return this.geometry.location.lat + ',' + this.geometry.location.lng;
+};
+
 Point.findBestRoute = function(pointsArray, currentLocation, optimalDistance) {
     console.log("calculating permutations");
     var permutations = arrayStuff.permute(pointsArray);
