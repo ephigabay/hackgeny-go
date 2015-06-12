@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/ephigabay/hackgeny-go",
   "dependencies": {
-    "express": "^4.12.4"
+    "express": "^4.12.4",
+    "bluebird": "~2.9.27",
+    "request": "~2.57.0"
   }
 }
