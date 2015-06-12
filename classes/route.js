@@ -4,6 +4,7 @@
 /*global require,module*/
 var arrayStuff = require('../lib/array-stuff');
 var Point = require('./point');
+var config = require('../config/index');
 
 function Route(route, distance) {
     this.route = route;
@@ -35,7 +36,7 @@ Route.prototype.getRouteDistance = function(currentLocation) {
 };
 
 Route.prototype.optimizeRoute = function(currentLocation, optimalDistance) {
-    while(this.distance > optimalDistance) {
+    while(this.distance > (optimalDistance + config.optimalDistanceThreshold)) {
         this.route.pop();
         this.distance = this.getRouteDistance(currentLocation);
     }
