@@ -17,8 +17,6 @@ app.get('/api/story', function(request, response) {
     var optimalDistance = 3500;
     var route;
 
-    console.time('RUN');
-
     locationProvider.getNearByMarkers(currentLocation, optimalDistance)
         .then(function(markers) {
             if(markers.length > config.maxPoints) {
@@ -36,7 +34,6 @@ app.get('/api/story', function(request, response) {
             return directionProvider.getRouteDirections(currentLocation, bestRoute.route);
         })
         .then(function(polyline) {
-            console.timeEnd('RUN');
             response.send(new Story(route.route, polyline));
         });
 });
