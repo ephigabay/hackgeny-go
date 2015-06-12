@@ -29,17 +29,12 @@ Point.prototype.getCoordinates = function() {
     return this.geometry.location.lat + ',' + this.geometry.location.lng;
 };
 
-Point.findBestRoute = function(pointsArray, currentLocation, optimalDistance) {
+Point.findShortestRoute = function(pointsArray, currentLocation, optimalDistance) {
     console.log("calculating permutations");
     var permutations = arrayStuff.permute(pointsArray);
     console.log("finished calculating permutations");
     return permutations.reduce(function(p, c) {
-        var distance = 0;
-        distance += currentLocation.getDistanceFrom(c[0]);
-        for(var i = 0; i < c.length - 1; i++) {
-            distance += c[i].getDistanceFrom(c[i+1]);
-        }
-        distance += c[i].getDistanceFrom(currentLocation);
+        var distance = Point.getRouteDistance(c);
         if(!p || Math.abs(distance - optimalDistance) < Math.abs(p.distance - optimalDistance)) {
             p = {
                 permutation: c,
@@ -48,6 +43,24 @@ Point.findBestRoute = function(pointsArray, currentLocation, optimalDistance) {
         }
         return p;
     }, null);
+};
+
+Point.getRouteDistance = function(route, currentLocation) {
+    var distance = 0;
+    distance += currentLocation.getDistanceFrom(route[0]);
+    for(var i = 0; i < route.length - 1; i++) {
+        distance += route[i].getDistanceFrom(route[i+1]);
+    }
+    distance += route[i].getDistanceFrom(currentLocation);
+    return distance;
+};
+
+Point.optimizeRoute = function(permutation, currentLocation, optimalDistance) {
+    while(permutation.distance > optimalDistance) {
+        permutation.pop();
+        permutation.distance = Point.getRouteDistance(permutation.permutation);
+    }
+    return permutation;
 };
 
 function calcCrow(lat1, lon1, lat2, lon2)

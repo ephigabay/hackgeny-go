@@ -17,7 +17,10 @@ app.get('/api/story', function(request, response) {
             if(items.length > config.maxPoints) {
                 items = items.slice(0, config.maxPoints);
             }
-            return Point.findBestRoute(items, currentLocation, distance);
+            return Point.findShortestRoute(items, currentLocation, distance);
+        })
+        .then(function(route) {
+            return Point.optimizeRoute(route, currentLocation, distance);
         })
         .then(function(bestRoute) {
             console.log("Best route is: " + bestRoute.distance + " meters");
