@@ -16,6 +16,10 @@ function Point(point) {
     //this.reference = point.reference;
     //this.id = point.id;
     //this.scope = point.scope;
+
+    if(this.name) {
+        this._fixMarkerName();
+    }
 }
 
 Point.prototype.getDistanceFrom = function (point) {
@@ -26,6 +30,13 @@ Point.prototype.getDistanceFrom = function (point) {
 
 Point.prototype.getCoordinates = function () {
     return this.geometry.location.lat + ',' + this.geometry.location.lng;
+};
+
+Point.prototype._fixMarkerName = function() {
+    this.name = this.name.replace(/-/g, ' ').replace(/[^a-z0-9 ,\.]/gi, '').trim();
+    if(!this.name) {
+        this.name = this.vicinity;
+    }
 };
 
 /* Stuff from the interwebs */
