@@ -81,18 +81,17 @@ var storyHandlers = {
         });
         var optimalDistance = request.body['max_distance'];
         var speed = config.speeds[request.body['difficulty']];
+        var route;
 
         locationProvider.getNearByMarkers(currentLocation, optimalDistance)
             .then(function (markers) {
                 if (markers.length > config.maxPoints) {
                     markers = markers.slice(0, config.maxPoints);
                 }
-                console.log("in the beginning I had " + markers.length + " merkers");
                 return Route.findShortestRoute(markers, currentLocation, optimalDistance);
             })
-            .then(function (r) {
-                console.log("yet now I have " + r.route.length + " merkers");
-                return r.optimizeRoute(currentLocation, optimalDistance);
+            .then(function (route) {
+                return route.optimizeRoute(currentLocation, optimalDistance);
             })
             .then(function (bestRoute) {
                 console.log("Best route is: " + bestRoute.distance + " meters");

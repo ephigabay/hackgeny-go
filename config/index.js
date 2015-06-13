@@ -10,8 +10,8 @@ module.exports = {
     maxPoints: 8,
     optimalDistanceThreshold: 500,
     presentationTimeout: 200, // milliseconds
-    //env: 'presentation'
-    env: 'development',
+    env: 'presentation',
+    //env: 'development',
     speeds: {
         easy: 5 * KMPH_TO_MPMS,
         medium: 10 * KMPH_TO_MPMS,
