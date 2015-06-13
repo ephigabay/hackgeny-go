@@ -7,6 +7,6 @@ module.exports = {
     maxPoints: 8,
     optimalDistanceThreshold: 500,
     presentationTimeout: 200, // milliseconds
-    //env: 'presentation'
-    env: 'development'
+    env: 'presentation'
+    //env: 'development'
 };
