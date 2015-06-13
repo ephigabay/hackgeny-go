@@ -7,7 +7,7 @@ var Point = require('./point');
 var config = require('../config/index');
 
 function Route(route, distance) {
-    this.route = route;
+    this.route = route.concat([]);
     this.distance = distance;
 }
 
@@ -15,7 +15,7 @@ Route.findShortestRoute = function(routes, currentLocation, optimalDistance) {
     console.log("calculating permutations");
     var permutations = arrayStuff.permute(routes);
     console.log("finished calculating permutations");
-    return permutations.reduce(function(p, c) {
+    var best = permutations.reduce(function(p, c) {
         c = new Route(c);
         c.distance = c.getRouteDistance(currentLocation);
         if(!p || Math.abs(c.distance - optimalDistance) < Math.abs(p.distance - optimalDistance)) {
@@ -23,6 +23,8 @@ Route.findShortestRoute = function(routes, currentLocation, optimalDistance) {
         }
         return p;
     }, null);
+    console.log("I have " + best.route.length + " merkers");
+    return best;
 };
 
 Route.prototype.getRouteDistance = function(currentLocation) {
