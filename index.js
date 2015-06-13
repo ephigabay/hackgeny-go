@@ -56,6 +56,8 @@ var storyHandlers = {
             geometry: {
                 location: request.body['start_location']
             }
+        }, {
+            isLast: true // Will be the last marker on the route.
         });
         var optimalDistance = request.body['max_distance'];
         var route;
@@ -73,6 +75,12 @@ var storyHandlers = {
             .then(function (bestRoute) {
                 console.log("Best route is: " + bestRoute.distance + " meters");
                 route = bestRoute;
+
+                // Add the current location, which is the ending point of the run as well,
+                // as a marker, so it settles with the UI logic.
+                currentLocation.name = 'End point';
+                currentLocation.isLast = true;
+                route.route.push(currentLocation);
 
                 return directionProvider.getRouteDirections(currentLocation, bestRoute.route);
             })

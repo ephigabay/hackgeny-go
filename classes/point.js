@@ -3,7 +3,7 @@
  */
 /*global require,module*/
 
-function Point(point) {
+function Point(point, config) {
 
     point = point || {};
 
@@ -12,6 +12,7 @@ function Point(point) {
     this.name = point.name;
     this.types = point.types;
     this.vicinity = point.vicinity;
+    this.is_last = false;
     //this.place_id = point.place_id;
     //this.reference = point.reference;
     //this.id = point.id;
@@ -19,6 +20,10 @@ function Point(point) {
 
     if(this.name) {
         this._fixMarkerName();
+    }
+
+    if(config && typeof config === 'object') {
+        this.is_last = config.isLast ? true : false;
     }
 }
 
