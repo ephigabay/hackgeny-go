@@ -5,5 +5,8 @@
 module.exports = {
     googleAPIKey: 'AIzaSyAa15kIWFqQw1RRqwX4gfPV1HvQpGd5pz0',
     maxPoints: 8,
-    optimalDistanceThreshold: 500
+    optimalDistanceThreshold: 500,
+    presentationTimeout: 200, // milliseconds
+    //env: 'presentation'
+    env: 'development'
 };

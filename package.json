@@ -7,7 +7,10 @@
     "start": "node index.js"
   },
   "dependencies": {
-    "express": "~4.9.x"
+    "express": "^4.12.4",
+    "bluebird": "~2.9.27",
+    "request": "~2.57.0",
+    "body-parser": "~1.12.4"
   },
   "engines": {
     "node": "0.12.2"
@@ -21,10 +24,5 @@
   "bugs": {
     "url": "https://github.com/ephigabay/hackgeny-go/issues"
   },
-  "homepage": "https://github.com/ephigabay/hackgeny-go",
-  "dependencies": {
-    "express": "^4.12.4",
-    "bluebird": "~2.9.27",
-    "request": "~2.57.0"
-  }
+  "homepage": "https://github.com/ephigabay/hackgeny-go"
 }
