@@ -19,6 +19,8 @@ function Story(markers, polyline) {
     for(var index = 0; index < this.markers.length; index++) {
         var currentMarker = this.markers[index];
         currentMarker.stories = [parseMarker(stories[index], this.markers[index+1])];
+
+        currentMarker.countdown = 10000;
     }
 }
 
