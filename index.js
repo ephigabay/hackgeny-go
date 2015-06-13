@@ -53,6 +53,7 @@ var CACHED_STORY = {
 var storyHandlers = {
     development: function developmentCallback(request, response) {
         //request.body = {"max_distance":3500, "start_location": {"lat":32.264506, "lng":34.87658}, difficulty:'medium'};
+        console.dir(request.body);
         var currentLocation = new Point({
             name: 'End point',
             geometry: {
@@ -66,11 +67,8 @@ var storyHandlers = {
 
         locationProvider.getNearByMarkers(currentLocation, optimalDistance)
             .then(function (markers) {
-                console.log("got " + markers.length + " from server");
                 if (markers.length > config.maxPoints) {
-                    console.log("slicing them");
                     markers = markers.slice(0, config.maxPoints);
-                    console.log("now have " + markers.length + " markers");
                 }
                 return Route.findShortestRoute(markers, currentLocation, optimalDistance);
             })
