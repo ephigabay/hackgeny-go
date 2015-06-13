@@ -52,6 +52,7 @@ var CACHED_STORY = {
 
 var storyHandlers = {
     development: function developmentCallback(request, response) {
+        request.body = {"max_distance":2000,"start_location":{"lat":32.264506, "lng":34.87658}};
         var currentLocation = new Point({
             geometry: {
                 location: request.body['start_location']
@@ -74,7 +75,7 @@ var storyHandlers = {
                 console.log("Best route is: " + bestRoute.distance + " meters");
                 route = bestRoute;
 
-                return directionProvider.getRouteDirections(currentLocation, bestRoute.route);
+                return directionProvider.getRouteDirections(currentLocation, bestRoute);
             })
             .then(function (polyline) {
                 response.send(new Story(route.route, polyline));
@@ -91,7 +92,7 @@ var storyHandlers = {
     }
 };
 
-app.post('/api/story', storyHandlers[config.env]);
+app.get('/api/story', storyHandlers[config.env]);
 
 app.listen(app.get('port'), function () {
     console.log('Node app is running on port', app.get('port'));
