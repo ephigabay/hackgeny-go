@@ -29,7 +29,7 @@ var CACHED_STORY = {
         "name": "Laura Studio Latino",
         "types": ["night_club", "school", "establishment"],
         "vicinity": "Ha-Kharuv Street 6, Beit Yehoshua",
-        "stories": ["I hope your beer was ice cold, because our analysts decrypted the message and I have some really bad news. The note was talking about a kidnapping. A child kidnapping. A small group of terrorists from are going to kidnap Prime Minister’s son at Harimon Street, Beit Yehoshua! Get there and stop this madness!"]
+        "stories": ["I hope your beer was ice cold, because our analysts decrypted the message and I have some really bad news. The note was talking about a kidnapping. A child kidnapping. A small group of terrorists are going to kidnap Prime Minister’s son at Harimon Street, Beit Yehoshua! Get there and stop this madness!"]
     }, {
         "geometry": {"location": {"lat": 32.257387, "lng": 34.868266}},
         "icon": "http://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png",
