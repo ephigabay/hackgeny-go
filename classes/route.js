@@ -43,4 +43,10 @@ Route.prototype.optimizeRoute = function(currentLocation, optimalDistance) {
     return this;
 };
 
+Route.prototype.getTotalDistance = function() {
+    return this.route.reduce(function(previousValue, currentValue) {
+        return previousValue + currentValue.distanceFromPrev;
+    }, 0);
+};
+
 module.exports = Route;

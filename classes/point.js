@@ -12,6 +12,7 @@ function Point(point) {
     this.name = point.name;
     this.types = point.types;
     this.vicinity = point.vicinity;
+    this.is_last = point.is_last || false;
     //this.place_id = point.place_id;
     //this.reference = point.reference;
     //this.id = point.id;
@@ -37,6 +38,10 @@ Point.prototype._fixMarkerName = function() {
     if(!this.name) {
         this.name = this.vicinity;
     }
+};
+
+Point.prototype.calculateCountdown = function() {
+
 };
 
 /* Stuff from the interwebs */

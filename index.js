@@ -52,13 +52,16 @@ var CACHED_STORY = {
 
 var storyHandlers = {
     development: function developmentCallback(request, response) {
-        request.body = {"max_distance":2000,"start_location":{"lat":32.264506, "lng":34.87658}};
+        //request.body = {"max_distance":2000, "start_location": {"lat":32.264506, "lng":34.87658}, difficulty:'medium'};
         var currentLocation = new Point({
+            name: 'End point',
             geometry: {
                 location: request.body['start_location']
-            }
+            },
+            is_last: true
         });
         var optimalDistance = request.body['max_distance'];
+        var speed = config.speeds[request.body['difficulty']];
         var route;
 
         locationProvider.getNearByMarkers(currentLocation, optimalDistance)
@@ -73,15 +76,19 @@ var storyHandlers = {
             })
             .then(function (bestRoute) {
                 console.log("Best route is: " + bestRoute.distance + " meters");
-                route = bestRoute;
+
+
+                // Add the current location, which is the ending point of the run as well,
+                // as a marker, so it settles with the UI logic.
+                bestRoute.route.push(currentLocation);
 
                 return directionProvider.getRouteDirections(currentLocation, bestRoute);
             })
-            .then(function (polyline) {
-                response.send(new Story(route.route, polyline));
+            .then(function (polylineAndRoute) {
+                response.send(new Story(polylineAndRoute.route, polylineAndRoute.polyline, speed));
             })
             .catch(function (err) {
-                console.log(err);
+                console.dir(err);
                 response.send({error: 'An error has occurred. Unable to calculate route.'});
             });
     },
@@ -92,7 +99,7 @@ var storyHandlers = {
     }
 };
 
-app.get('/api/story', storyHandlers[config.env]);
+app.post('/api/story', storyHandlers[config.env]);
 
 app.listen(app.get('port'), function () {
     console.log('Node app is running on port', app.get('port'));
