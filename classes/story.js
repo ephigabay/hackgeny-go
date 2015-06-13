@@ -11,7 +11,7 @@ function Story(markers, polyline) {
 
     var stories = [
         'Well done! I see the note is encrypted. I’ll send it to our best analysts. In the meantime, keep a low profile, and go grab a beer at the nearest bar. Let me find it for you… Got it. it’s {MARKER}.',
-        'I hope your beer was ice cold, because our analysts decrypted the message and I have some really bad news. The note was talking about a kidnapping. A child kidnapping. A small group of terrorists from are going to kidnap Prime Minister’s son at {MARKER}! Get there and stop this madness!',
+        'I hope your beer was ice cold, because our analysts decrypted the message and I have some really bad news. The note was talking about a kidnapping. A child kidnapping. A small group of terrorists are going to kidnap Prime Minister’s son at {MARKER}! Get there and stop this madness!',
         'Good! Let’s search for him. Does anyone look suspicious? There! There he is! The one with the black coat. They shoved the poor child into a black van! They’re heading towards {MARKER}! You have to get there now!',
         'There, they stopped, and our guy just got out of the vehicle without the child. He’s running. You go after him, and we’ll take care of the van and save the child! You have to get him before something terrible happens!'
     ];
