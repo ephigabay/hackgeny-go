@@ -66,8 +66,11 @@ var storyHandlers = {
 
         locationProvider.getNearByMarkers(currentLocation, optimalDistance)
             .then(function (markers) {
+                console.log("got " + markers.length + " from server");
                 if (markers.length > config.maxPoints) {
+                    console.log("slicing them");
                     markers = markers.slice(0, config.maxPoints);
+                    console.log("now have " + markers.length + " markers");
                 }
                 return Route.findShortestRoute(markers, currentLocation, optimalDistance);
             })
