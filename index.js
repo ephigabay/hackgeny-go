@@ -52,7 +52,7 @@ var CACHED_STORY = {
 
 var storyHandlers = {
     development: function developmentCallback(request, response) {
-        //request.body = {"max_distance":2000, "start_location": {"lat":32.264506, "lng":34.87658}, difficulty:'medium'};
+        //request.body = {"max_distance":3500, "start_location": {"lat":32.264506, "lng":34.87658}, difficulty:'medium'};
         var currentLocation = new Point({
             name: 'End point',
             geometry: {
